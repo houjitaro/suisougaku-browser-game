@@ -2002,7 +2002,7 @@ body.manager-mode #managerScreen > .manager-confirm-main > .manager-confirm-acti
     <div class="title-art-wrap">
       <img
         class="title-art"
-        src="https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/00_title.png"
+        src="https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/00_title.png"
         alt="とある獣系弱小楽団ですが、5年で全国金賞を目指します。">
 
       <button
@@ -2455,7 +2455,7 @@ body.manager-mode #managerScreen > .manager-confirm-main > .manager-confirm-acti
 <div class="manager-cards">
       <button class="manager-card manager-card" onclick="selectManager('MGR01')">
         <img class="manager-card-image"
-          src="https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_cat_normal.webp"
+          src="https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_cat_normal.webp"
           alt="新米マネージャー 黒猫">
         <div class="manager-card-top">
           <div class="manager-name">新米マネージャー</div>
@@ -2474,7 +2474,7 @@ body.manager-mode #managerScreen > .manager-confirm-main > .manager-confirm-acti
 
       <button class="manager-card manager-card" onclick="selectManager('MGR02')">
         <img class="manager-card-image"
-          src="https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_giraffe_normal.webp"
+          src="https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_giraffe_normal.webp"
           alt="敏腕マネージャー キリン">
         <div class="manager-card-top">
           <div class="manager-name">敏腕マネージャー</div>
@@ -2493,7 +2493,7 @@ body.manager-mode #managerScreen > .manager-confirm-main > .manager-confirm-acti
 
       <button class="manager-card manager-card" onclick="selectManager('MGR03')">
         <img class="manager-card-image"
-          src="https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_tanuki_normal.webp"
+          src="https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_tanuki_normal.webp"
           alt="目利きマネージャー タヌキ">
         <div class="manager-card-top">
           <div class="manager-name">目利きマネージャー</div>
@@ -3491,7 +3491,7 @@ function selectManager(managerId) {
       trait: '必死の勧誘',
       description: '毎年の新入団員が3人以上になる。',
       initialRating: 40,
-      imageUrl: 'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_cat_normal.webp'
+      imageUrl: 'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_cat_normal.webp'
     },
     MGR02: {
       id: 'MGR02',
@@ -3500,7 +3500,7 @@ function selectManager(managerId) {
       trait: '盤石の運営',
       description: '高いRatingからゲームを開始する。',
       initialRating: 45,
-      imageUrl: 'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_giraffe_normal.webp'
+      imageUrl: 'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_giraffe_normal.webp'
     },
     MGR03: {
       id: 'MGR03',
@@ -3509,7 +3509,7 @@ function selectManager(managerId) {
       trait: '謎の人脈',
       description: 'SR以上の新入団員が出やすくなる。',
       initialRating: 40,
-      imageUrl: 'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_tanuki_normal.webp'
+      imageUrl: 'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_tanuki_normal.webp'
     }
   };
 
@@ -3785,7 +3785,7 @@ function startFirstYearWithManager() {
 function getInstrumentImageUrl(instrument, rarity, cardVariant) {
 
   const baseUrl =
-  'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/cards/';
+  'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/cards/';
 
   const validInstruments = [
     'フルート',
@@ -5011,9 +5011,9 @@ const rating =
 const showRating = Number.isFinite(ratingNum);
 const managerName = manager && manager.name ? escapeHtml(manager.name) : 'マネージャー';
   const iconMap = {
-    MGR01: 'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_cat_icon.webp',
-    MGR02: 'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_giraffe_icon.webp',
-    MGR03: 'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/manager_tanuki_icon.webp'
+    MGR01: 'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_cat_icon.webp',
+    MGR02: 'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_giraffe_icon.webp',
+    MGR03: 'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/manager_tanuki_icon.webp'
   };
   const managerImage = manager && iconMap[manager.id]
     ? iconMap[manager.id]
@@ -5042,7 +5042,7 @@ const managerName = manager && manager.name ? escapeHtml(manager.name) : 'マネ
 function getBandEventImageUrl(title, ratingBonus) {
 
   const baseUrl =
-  'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/';
+  'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/';
 
   const name = String(title || '');
   let baseName = '';

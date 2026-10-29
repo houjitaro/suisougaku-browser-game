@@ -94,7 +94,7 @@ function renderState(s){
  root.gameUiState={bandName:s.player.bandName,prefecture:s.player.prefecture,branch:s.player.branch,year:s.year,rating:s.player.rating,cardCount:s.members.length};
  root.pendingPlayerData={bandName:s.player.bandName,prefecture:s.player.prefecture,branch:s.player.branch};
  const mgr=C.managers().find(x=>x.id===s.player.managerId);
- if(mgr)root.pendingManager={...mgr,imageUrl:'https://raw.githubusercontent.com/kotetsuinu/suisougaku-game-assets/main/'+{MGR01:'manager_cat_normal.webp',MGR02:'manager_giraffe_normal.webp',MGR03:'manager_tanuki_normal.webp'}[mgr.id]};
+ if(mgr)root.pendingManager={...mgr,imageUrl:'https://raw.githubusercontent.com/houjitaro/suisougaku-game-assets/main/'+{MGR01:'manager_cat_normal.webp',MGR02:'manager_giraffe_normal.webp',MGR03:'manager_tanuki_normal.webp'}[mgr.id]};
  const b=s.contests.branch,n=s.contests.national;
  if(s.status==='completed'){root.renderFiveYearFinal(doCall('getPlayerHistory',[]));return;}
  if(!s.player.managerId){root.showManagerSelection();return;}
