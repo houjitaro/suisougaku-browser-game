@@ -1183,8 +1183,8 @@ margin-right:calc(50% - 50vw);
     .manager-intro-image {
       width:min(100%,260px);
       max-height:38dvh;
-      object-fit:cover;
-      object-position:center 18%;
+      object-fit:contain;
+      object-position:center center;
       display:block;
       margin:0 auto 10px;
       border-radius:12px;
@@ -1942,9 +1942,11 @@ body.manager-mode #managerScreen > .manager-confirm-main > .manager-intro-card {
   padding:14px 12px 20px !important;
 }
 body.manager-mode #managerScreen .manager-intro-image {
-  width:min(100%,220px) !important;
-  height:clamp(120px,22dvh,220px) !important;
-  max-height:none !important;
+  width:min(100%,260px) !important;
+  height:auto !important;
+  max-height:min(42dvh,360px) !important;
+  object-fit:contain !important;
+  object-position:center center !important;
   flex:0 0 auto !important;
 }
 body.manager-mode #managerScreen > .manager-confirm-main > .manager-confirm-actions {
@@ -2129,9 +2131,13 @@ body.manager-mode #managerScreen > .manager-confirm-main > .manager-confirm-acti
     padding:12px !important;
   }
   body.manager-mode #managerScreen .manager-card-image {
-    aspect-ratio:3 / 3.3 !important;
-    max-height:230px !important;
+    /* Portrait manager illustrations: show the full cat/tanuki instead of a square crop. */
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:1 / 1.65 !important;
+    max-height:340px !important;
     object-fit:contain !important;
+    object-position:center center !important;
   }
   body.manager-mode #managerScreen .manager-name {
     font-size:19px !important;
@@ -7950,8 +7956,31 @@ let finalManagerLine = '';
             -webkit-overflow-scrolling:touch;
           "
         >
-
-
+          <button
+            type="button"
+            id="finalMemberCardCloseButton"
+            aria-label="カードを閉じて最終結果に戻る"
+            onclick="event.stopPropagation(); closeFinalMemberCard();"
+            style="
+              position:fixed;
+              top:max(14px,env(safe-area-inset-top));
+              right:max(12px,env(safe-area-inset-right));
+              z-index:100002;
+              min-height:46px;
+              padding:10px 17px;
+              border:1px solid rgba(255,246,220,.7);
+              border-radius:999px;
+              background:rgba(35,29,24,.94);
+              color:#fff8e8;
+              font-family:inherit;
+              font-size:16px;
+              font-weight:700;
+              line-height:1.2;
+              cursor:pointer;
+              box-shadow:0 3px 12px rgba(0,0,0,.35);
+              -webkit-tap-highlight-color:transparent;
+            "
+          >× 閉じる</button>
 
 <div
   id="finalMemberCardModalPanel"
@@ -8302,6 +8331,16 @@ function closeFinalMemberCard(event) {
   if (modal) modal.style.display = 'none';
   document.body.style.overflow = '';
 }
+
+// The final result screen replaces body HTML; keep Escape handling on document.
+document.addEventListener('keydown', function(event) {
+  if (event.key !== 'Escape') return;
+  const modal = document.getElementById('finalMemberCardModal');
+  if (modal && modal.style.display !== 'none') {
+    closeFinalMemberCard();
+    event.preventDefault();
+  }
+});
 
 function returnToTitleScreen() {
   document.body.style.overflow = '';
