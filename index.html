@@ -1529,6 +1529,18 @@ padding:34px 16px !important;
     overflow:hidden;
   }
   .band-event-image-box img{width:100%!important;height:100%!important;object-fit:cover!important;}
+  #finalMemberCardModal {
+    position:fixed !important;
+    inset:0 !important;
+    z-index:2147483000 !important;
+  }
+  #finalMemberCardCloseButton {
+    position:fixed !important;
+    top:max(12px,env(safe-area-inset-top)) !important;
+    right:max(12px,env(safe-area-inset-right)) !important;
+    z-index:2147483001 !important;
+    touch-action:manipulation;
+  }
   #finalMemberCardModal .final-swipe-hint{
     position:absolute;left:0;right:0;bottom:-38px;text-align:center;
     color:#fff7e5;font-size:15px;font-weight:700;letter-spacing:.05em;
@@ -7941,7 +7953,9 @@ let finalManagerLine = '';
 
         <div
           id="finalMemberCardModal"
-          onclick="closeFinalMemberCard(event)"
+          role="dialog"
+          aria-modal="true"
+          aria-label="カードの拡大表示"
           style="
             display:none;
             position:fixed;
@@ -7960,7 +7974,7 @@ let finalManagerLine = '';
             type="button"
             id="finalMemberCardCloseButton"
             aria-label="カードを閉じて最終結果に戻る"
-            onclick="event.stopPropagation(); closeFinalMemberCard();"
+            title="カード一覧に戻る"
             style="
               position:fixed;
               top:max(14px,env(safe-area-inset-top));
@@ -8293,14 +8307,39 @@ function openFinalMemberCard(index) {
   const modal = document.getElementById('finalMemberCardModal');
   if (!modal) return;
 
+  // Final results use a long scrolling layout. Keep the dialog OUTSIDE the
+  // result container so that mobile overflow/stacking contexts cannot clip it.
+  if (modal.parentElement !== document.body) {
+    document.body.appendChild(modal);
+  }
+
   renderFinalMemberCard(index);
   modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+
+  const closeButton = document.getElementById('finalMemberCardCloseButton');
+  if (closeButton) {
+    closeButton.onclick = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeFinalMemberCard();
+    };
+  }
+
+  // A tap outside the card also closes it. The button is a separate, reliable
+  // close control even if the card fills nearly the entire phone screen.
+  modal.onclick = function(e) {
+    if (e.target === modal) closeFinalMemberCard();
+  };
 
   let startX = null;
   let startY = null;
-
   modal.ontouchstart = function(e) {
+    if (e.target.closest && e.target.closest('#finalMemberCardCloseButton')) {
+      startX = startY = null;
+      return;
+    }
     if (!e.touches || !e.touches.length) return;
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
@@ -8313,10 +8352,7 @@ function openFinalMemberCard(index) {
     const dx = t.clientX - startX;
     const dy = t.clientY - startY;
     startX = startY = null;
-
     if (Math.max(Math.abs(dx), Math.abs(dy)) < 45) return;
-
-    // 左/上＝次、右/下＝前
     if (Math.abs(dx) >= Math.abs(dy)) {
       renderFinalMemberCard(window.finalMemberCardIndex + (dx < 0 ? 1 : -1));
     } else {
@@ -8325,14 +8361,17 @@ function openFinalMemberCard(index) {
   };
 }
 
-function closeFinalMemberCard(event) {
-  if (event && event.target && event.target.id !== 'finalMemberCardModal') return;
+function closeFinalMemberCard() {
   const modal = document.getElementById('finalMemberCardModal');
-  if (modal) modal.style.display = 'none';
+  if (modal) {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
   document.body.style.overflow = '';
+  // Do not rerender the result list: preserve its existing scroll position.
 }
 
-// The final result screen replaces body HTML; keep Escape handling on document.
+// The final result screen replaces body HTML, but this listener persists.
 document.addEventListener('keydown', function(event) {
   if (event.key !== 'Escape') return;
   const modal = document.getElementById('finalMemberCardModal');
